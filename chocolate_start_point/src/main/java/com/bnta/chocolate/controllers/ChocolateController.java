@@ -20,10 +20,15 @@ public class ChocolateController {
 
     @Autowired
     EstateRepository estateRepository;
-    @GetMapping (value = "/chocolates")
-    public ResponseEntity<List<Chocolate>> getAllChocs(){
-        List<Chocolate> chocolates = chocolateService.getAllChocs();
-        return new ResponseEntity<>(chocolates, HttpStatus.OK);
+    @GetMapping (value = "/chocs")
+    public ResponseEntity<List<Chocolate>> getAllChocs(@RequestParam(required = false, name = "cocapercentage") Integer percentage){
+        if (percentage==null){
+            List<Chocolate> chocolates = chocolateService.getAllChocs();
+            return new ResponseEntity<>(chocolates, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(chocolateService.minCocoaPercentageChocolate(percentage),HttpStatus.OK);
+        }
+
     }
 
     @PostMapping
@@ -34,9 +39,9 @@ public class ChocolateController {
         return new ResponseEntity<>(chocolate,HttpStatus.OK);
     }
 
-    @PostMapping(value = "/coca/{percentage}")
-    public ResponseEntity<List<Chocolate>> allChocosWithCocaPercentage(@PathVariable int percentage){
-        return new ResponseEntity<>(chocolateService.minCocoaPercentageChocolate(percentage),HttpStatus.OK);
-    }
+//    @PostMapping(value = "/coca/{percentage}")
+//    public ResponseEntity<List<Chocolate>> allChocosWithCocaPercentage(@PathVariable int percentage){
+//        return new ResponseEntity<>(chocolateService.minCocoaPercentageChocolate(percentage),HttpStatus.OK);
+//    }
 
 }
