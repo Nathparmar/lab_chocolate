@@ -1,6 +1,7 @@
 package com.bnta.chocolate.controllers;
 
 import com.bnta.chocolate.models.Chocolate;
+import com.bnta.chocolate.models.ChocolateDTO;
 import com.bnta.chocolate.models.Estate;
 import com.bnta.chocolate.services.ChocolateService;
 import com.bnta.chocolate.services.EstateService;
@@ -26,6 +27,12 @@ public class EstateController {
     public ResponseEntity<List<Estate>> getAllEstates(){
         List<Estate> estates = estateService.getAllEstates();
         return new ResponseEntity<>(estates, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/estates")
+    public ResponseEntity<Estate> addEstate(@RequestBody Estate estate){
+        estateService.saveEstate(estate);
+        return new ResponseEntity<>(estate,HttpStatus.OK);
     }
 
 
